@@ -56,11 +56,11 @@ def build_percent_responding_rectangles(percentFavorable,percentNeutral,percentU
     percentUnfavorableFloat = float(percentUnfavorable)/100
     if header:
         d = Drawing(0*mm, 10*mm)
-        totalRectangleLength = 60
+
     else:
         d = Drawing(0*mm, 0*mm)
-        totalRectangleLength = 75
 
+    totalRectangleLength = 60
     rectangleHeight = 4
     rectangleYposition = 0
     rectangleTextYposition = 1
@@ -116,7 +116,7 @@ def build_percent_responding_rectangles(percentFavorable,percentNeutral,percentU
 
 
 percentRespondingHeader = build_percent_responding_rectangles(33, 33, 33, header=True)
-chart = build_percent_responding_rectangles(20, 40, 20, header=False)
+chart = build_percent_responding_rectangles(33, 33, 33, header=False)
 perfMgmtHeader = Paragraph('''<b>Perfomance Managment</b>''', headerStyle)
 totalNheader = Paragraph('''<b>Total N''', headerStyle)
 percentResp = Paragraph('''<b>Percent Responding''', headerStyle)
