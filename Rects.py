@@ -2,69 +2,66 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph, Table, TableStyle
-from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER
-from reportlab.lib import colors
+from reportlab.lib.colors import yellow, red, black, green
 from reportlab.lib.pagesizes import letter, inch
 from io import BytesIO
 
 def variousshapes(canvas):
-     from reportlab.lib.units import inch
-     inch = int(inch)
-     canvas.setStrokeGray(0.5)
-     canvas.grid(range(0,int(11*inch/2),int(inch/2)), range(0,int(7*inch/2),int(inch/2)))
-     canvas.setLineWidth(4)
-     canvas.setStrokeColorRGB(0, 0.2, 0.7)
-     canvas.setFillColorRGB(1, 0.6, 0.8)
-     canvas.rect(inch,inch,6*inch,9*inch, fill=1)
+    from reportlab.lib.units import inch
+    inch = int(inch)
+    canvas.setStrokeGray(0.5)
+    canvas.grid(range(0,int(11*inch/2),int(inch/2)), range(0,int(7*inch/2),int(inch/2)))
+
+    rectangeHieght = .5
+    # % Favorable
+    favorableXposition = inch
+    favorableYposition = inch
+    favorableRectWidth = 1*inch
+
+    # Favorable Rect
+    canvas.setStrokeColor(green)
+    canvas.setFillColor(green)
+    canvas.rect(favorableXposition,favorableYposition,favorableRectWidth,rectangeHieght*favorableYposition, fill=1)
+
+    # % Favorable Text
+    canvas.setFillColor(black)
+    canvas.drawString(favorableXposition+(favorableXposition/2.5),favorableYposition+(favorableYposition/5), "11")
+
+    # % Neutral
+    neutralXposition = 2*inch
+    neutralYposition = 1*inch
+    neutralRectWidth = 1*inch
+
+    # Neutral Rect
+    canvas.setStrokeColor(yellow)
+    canvas.setFillColor(yellow)
+    canvas.rect(neutralXposition,neutralYposition,neutralRectWidth,rectangeHieght*inch, fill=1)
+
+    # % Neutral Text
+    canvas.setFillColor(black)
+    canvas.drawString(neutralXposition+(neutralXposition/2.5),neutralYposition+(neutralYposition/5), "22")
+
+    # % Unfavorable
+    unfavorableXposition = 3*inch
+    unfavorableYposition = 1*inch
+    unfavorableRectWidth = 1*inch
+
+    # Unfavorable Rect
+    canvas.setStrokeColor(red)
+    canvas.setFillColor(red)
+    canvas.rect(unfavorableXposition,unfavorableYposition,unfavorableRectWidth,rectangeHieght*inch, fill=1)
+
+    # Unfavorable Text
+    canvas.setFillColor(black)
+    canvas.drawString(unfavorableXposition+(unfavorableXposition/2.5),unfavorableYposition+(unfavorableYposition/5), "33")
+
 
 buffer = BytesIO()
 file = open('rects.pdf', 'w+')
 
 width, height = letter
-styles = getSampleStyleSheet()
-styleN = styles["BodyText"]
-styleN.alignment = TA_LEFT
-
-styleBH = styles["Normal"]
-styleBH.alignment = TA_CENTER
-styleBH.fontSize = 7
-
-def coord(x, y, unit=1):
-    x, y = x * unit, height -  y * unit
-    return x, y
-
-# Headers
-perfMgmtHeader = Paragraph('''<b>Perfomance Managment</b>''', styleBH)
-totalNheader = Paragraph('''<b>Total N''', styleBH)
-percentResp = Paragraph('''<b>Percent Responding''', styleBH)
-percentFavHeader = Paragraph('''<b>% Fav''', styleBH)
-percentDistHeader = Paragraph('''<b>% Distribution''', styleBH)
-meanHeader = Paragraph('''<b>Mean''', styleBH)
-
-data= [[perfMgmtHeader, totalNheader,percentResp, percentFavHeader, percentDistHeader,meanHeader],
-       ['00', '01', '02', '03', '04'],
-       ['10', '11', '12', '13', '14'],
-       ['20', '21', '22', '23', '24'],
-       ['30', '31', '32', '33', '34']]
-
-#Style the table
-t = Table(data,style=[
-    ('GRID', (0, 0), (-1, -1), 1, colors.black),
-    ('FONTSIZE',(0, 0), (-1, -1),7)
-])
-
-# Fixed column widths
-t._argW[0] = 2*inch #Perf Mgmt
-t._argW[1] = .43*inch #Total N
-t._argW[2] = 2.5*inch # % Resp 1
-t._argW[3] = .5*inch # % Fav
-t._argW[4] = 1.5*inch # % Dist
-t._argW[5] = .43*inch # Mean
-
-c = canvas.Canvas(buffer, pagesize=A4)
+c = canvas.Canvas(buffer, pagesize=letter)
 variousshapes(c)
-t.wrapOn(c, width, height)
-t.drawOn(c, *coord(1, 3, cm))
 c.save()
 
 #Write the buffer to disk and close the file
