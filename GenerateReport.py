@@ -118,11 +118,11 @@ def build_percent_responding_rectangles(percentFavorable,percentNeutral,percentU
 percentRespondingHeader = build_percent_responding_rectangles(33, 33, 33, header=True)
 chart = build_percent_responding_rectangles(33, 33, 33, header=False)
 perfMgmtHeader = Paragraph('''<b>Perfomance Managment</b>''', headerStyle)
-totalNheader = Paragraph('''<b>Total N''', headerStyle)
-percentResp = Paragraph('''<b>Percent Responding''', headerStyle)
-percentFavHeader = Paragraph('''<b>% Fav''', headerStyle)
-percentDistHeader = Paragraph('''<b>% Distribution''', headerStyle)
-meanHeader = Paragraph('''<b>Mean''', headerStyle)
+totalNheader = Paragraph('''<b>Total N</b>''', headerStyle)
+percentResp = Paragraph('''<b>Percent Responding</b>''', headerStyle)
+percentFavHeader = Paragraph('''<b>% Fav</b>''', headerStyle)
+percentDistHeader = Paragraph('''<b>% Distribution</b>''', headerStyle)
+meanHeader = Paragraph('''<b>Mean</b>''', headerStyle)
 data= [[perfMgmtHeader, totalNheader,percentRespondingHeader, percentFavHeader, percentDistHeader,meanHeader],
        ['10', '11', chart, '13', '14', '15'],
        ['20', '21', '22', '23', '24', '25'],
